@@ -4,6 +4,19 @@ import DetailsCard from '@/app/_components/DetailsCard';
 import Reviews from '@/app/_components/Reviews';
 import Similar from '@/app/_components/Similar';
 import { getPlace, getPlaceFirebase } from '@/app/_lib/actions';
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ roomId: string }>;
+}) {
+  const roomId = (await params).roomId;
+  const { name } = await getPlace(roomId);
+  return {
+    title: `Room: ${name}`,
+  };
+}
+
 const page = async ({ params }: { params: Promise<{ roomId: string }> }) => {
   const roomId = (await params).roomId;
   const place = await getPlaceFirebase(roomId);
